@@ -10,7 +10,7 @@ const (
 	Dice20Sides DiceType = 20
 )
 
-func (d DiceType) IsValid() bool {
+func (d DiceType) Validate() bool {
 	switch d {
 	case Dice4Sides, Dice6Sides, Dice8Sides, Dice10Sides, Dice20Sides:
 		return true

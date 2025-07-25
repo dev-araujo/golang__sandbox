@@ -25,18 +25,41 @@ func HandleRollDice(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	diceType := d.DiceType(request.DiceType)
-	result := rand.Intn(int(diceType)) + 1
+	if request.DiceType != nil {
+		diceType := d.DiceType(*request.DiceType)
+		result := rand.Intn(int(diceType)) + 1
 
-	response := RollResponse{
-		Result:   result,
-		DiceType: int(diceType),
+		response := RollResponse{
+			Result:   &result,
+			DiceType: request.DiceType,
+		}
+
+		outcome := handleCriticalsResults(request, result)
+		if outcome != "" {
+			response.Outcome = outcome
+		}
+
+		respondWithJSON(w, http.StatusOK, response)
+		return
 	}
 
-	outcome := handleCriticalsResults(request, result)
-	if outcome != "" {
-		response.Outcome = outcome
+	if len(request.DiceTypes) > 0 {
+		var rolls []Roll
+		var sum uint
+		for _, dt := range request.DiceTypes {
+			diceType := d.DiceType(dt)
+			result := rand.Intn(int(diceType)) + 1
+			sum += uint(result)
+			rolls = append(rolls, Roll{
+				Result:   result,
+				DiceType: int(diceType),
+			})
+		}
+		response := RollResponse{
+			Rolls:    rolls,
+			TotalSum: &sum,
+		}
+		respondWithJSON(w, http.StatusOK, response)
+		return
 	}
-
-	respondWithJSON(w, http.StatusOK, response)
 }
