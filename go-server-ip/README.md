@@ -2,7 +2,6 @@
 
 # CLI IPs & Servers
 
-![image](https://github.com/user-attachments/assets/e3274fa6-269e-42ca-97dc-e0f7c28f3739)
 
 
 Este é um aplicativo de linha de comando (CLI) desenvolvido em Go que permite buscar IPs e nomes de servidores na internet. O projeto utiliza a biblioteca [urfave/cli](https://github.com/urfave/cli) para facilitar a criação de comandos e flags.
