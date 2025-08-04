@@ -2,16 +2,18 @@
 
 Este repositório é um sandbox para projetos e estudos em Golang. 
 
-## Projetos
+## Organização da Sandbox 
 
 > Dos mais atuais aos mais antigos
 
-- [roller-dice](./roller-dice): Uma API simples em Go para rolar dados de RPG
-- [golang-with-tests](./golang-with-tests): Uma coleção de estudos de Go com foco em testes.
-- [go-server-ip](./go-server-ip): Um servidor simples em Go que retorna o endereço de IP do cliente.
+### Projetos de estudo:
 
+- [roller-dice](./projects/roller-dice/): Uma API simples em Go para rolar dados de RPG
+- [go-server-ip](./projects/go-server-ip): Um servidor simples em Go que retorna o endereço de IP do cliente.
 
+### Estudos de Golang:
 
+- [golang-with-tests](./studies/golang-with-tests): Uma coleção de estudos de Go com foco em testes.
 
 
 
