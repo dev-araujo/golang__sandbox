@@ -45,6 +45,12 @@ func (s *service) AddTask(description string) Task {
 }
 
 func (s *service) DeleteTask(id uint) {
+	for i, task := range s.tasks {
+		if task.ID == id {
+			s.tasks = append(s.tasks[:i], s.tasks[i+1:]...)
+			return
+		}
+	}
 }
 
 func (s *service) UpdateTask(id uint, description string, completed bool) {

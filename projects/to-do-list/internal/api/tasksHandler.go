@@ -53,6 +53,24 @@ func (s *Server) addTaskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) deleteTaskHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var requestPayload struct {
+		ID uint `json:"id"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&requestPayload)
+	if err != nil {
+		http.Error(w, "Corpo da requisição inválido ou mal formatado", http.StatusBadRequest)
+		return
+	}
+
+	s.task.DeleteTask(requestPayload.ID)
+	w.WriteHeader(http.StatusNoContent)
+
 }
 
 func (s *Server) updateTaskHandler(w http.ResponseWriter, r *http.Request) {
