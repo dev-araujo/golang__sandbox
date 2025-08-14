@@ -24,6 +24,30 @@ func (s *Server) getListTasksHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
+func (s *Server) getTaskHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var requestPayload struct {
+		ID uint `json:"id"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&requestPayload)
+	if err != nil {
+		http.Error(w, "Corpo da requisição inválido ou mal formatado", http.StatusBadRequest)
+		return
+	}
+
+	task := s.task.GetTask(requestPayload.ID)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(task)
+
+}
+
 func (s *Server) addTaskHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
@@ -74,9 +98,6 @@ func (s *Server) deleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) updateTaskHandler(w http.ResponseWriter, r *http.Request) {
-}
-
-func (s *Server) getTaskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) checkTaskHandler(w http.ResponseWriter, r *http.Request) {

@@ -5,7 +5,7 @@ type Service interface {
 	AddTask(description string) Task
 	DeleteTask(id uint)
 	UpdateTask(id uint, description string, completed bool)
-	GetTask(id uint) (Task, bool)
+	GetTask(id uint) Task
 	CheckTask(id uint)
 }
 
@@ -56,8 +56,13 @@ func (s *service) DeleteTask(id uint) {
 func (s *service) UpdateTask(id uint, description string, completed bool) {
 }
 
-func (s *service) GetTask(id uint) (Task, bool) {
-	return Task{}, false
+func (s *service) GetTask(id uint) Task {
+	for _, task := range s.tasks {
+		if task.ID == id {
+			return task
+		}
+	}
+	return Task{}
 }
 
 func (s *service) CheckTask(id uint) {
