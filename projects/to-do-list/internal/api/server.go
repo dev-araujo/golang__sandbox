@@ -26,7 +26,6 @@ func (s *Server) registerRoutes() {
 	s.router.HandleFunc("/todo/delete", s.deleteTaskHandler)
 	s.router.HandleFunc("/todo/update", s.updateTaskHandler)
 	s.router.HandleFunc("/todo/get", s.getTaskHandler)
-	s.router.HandleFunc("/todo/check", s.checkTaskHandler)
 }
 
 func (s *Server) Router() http.Handler {

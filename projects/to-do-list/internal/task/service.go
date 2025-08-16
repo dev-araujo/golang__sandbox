@@ -4,9 +4,8 @@ type Service interface {
 	GetListTasks() []Task
 	AddTask(description string) Task
 	DeleteTask(id uint)
-	UpdateTask(id uint, description string, completed bool)
+	UpdateTask(id uint, description string, completed bool) Task
 	GetTask(id uint) Task
-	CheckTask(id uint)
 }
 
 type Task struct {
@@ -53,7 +52,16 @@ func (s *service) DeleteTask(id uint) {
 	}
 }
 
-func (s *service) UpdateTask(id uint, description string, completed bool) {
+func (s *service) UpdateTask(id uint, description string, completed bool) Task {
+
+	for i := range s.tasks {
+		if s.tasks[i].ID == id {
+			s.tasks[i].Description = description
+			s.tasks[i].Completed = completed
+			return s.GetTask(id)
+		}
+	}
+	return s.GetTask(id)
 }
 
 func (s *service) GetTask(id uint) Task {
@@ -63,7 +71,4 @@ func (s *service) GetTask(id uint) Task {
 		}
 	}
 	return Task{}
-}
-
-func (s *service) CheckTask(id uint) {
 }
