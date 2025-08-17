@@ -8,12 +8,6 @@ type Service interface {
 	GetTask(id uint) Task
 }
 
-type Task struct {
-	ID          uint   `json:"id"`
-	Description string `json:"description"`
-	Completed   bool   `json:"completed"`
-}
-
 type service struct {
 	tasks  []Task
 	nextID uint

@@ -5,13 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/dev-araujo/golang__sandbox/to-do-list/internal/api"
-	"github.com/dev-araujo/golang__sandbox/to-do-list/internal/task"
+	"github.com/dev-araujo/golang__sandbox/to-do-list/internal/platform/server"
+	"github.com/dev-araujo/golang__sandbox/to-do-list/pkg/task"
 )
 
 func main() {
 	taskService := task.NewService()
-	server := api.NewServer(taskService)
+	server := server.NewServer(taskService)
 
 	// Configura o handler com CORS
 	http.Handle("/", server.Router())
