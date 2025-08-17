@@ -53,10 +53,14 @@ func getTaskHandler(s Service) http.HandlerFunc {
 			return
 		}
 
-		task := s.GetTask(requestPayload.ID)
+		task, err := s.GetTask(requestPayload.ID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
 
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(task)
 	}
 }
@@ -108,7 +112,11 @@ func deleteTaskHandler(s Service) http.HandlerFunc {
 			return
 		}
 
-		s.DeleteTask(requestPayload.ID)
+		if err := s.DeleteTask(requestPayload.ID); err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+
 		w.WriteHeader(http.StatusNoContent)
 	}
 }
@@ -137,10 +145,14 @@ func updateTaskHandler(s Service) http.HandlerFunc {
 			return
 		}
 
-		taskUpdated := s.UpdateTask(requestPayload.ID, requestPayload.Description, requestPayload.Completed)
+		taskUpdated, err := s.UpdateTask(requestPayload.ID, requestPayload.Description, requestPayload.Completed)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
 
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(taskUpdated)
 	}
 }

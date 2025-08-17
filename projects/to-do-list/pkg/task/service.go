@@ -1,11 +1,13 @@
 package task
 
+import "fmt"
+
 type Service interface {
 	GetListTasks() []Task
 	AddTask(description string) Task
-	DeleteTask(id uint)
-	UpdateTask(id uint, description string, completed bool) Task
-	GetTask(id uint) Task
+	DeleteTask(id uint) error
+	UpdateTask(id uint, description string, completed bool) (Task, error)
+	GetTask(id uint) (Task, error)
 }
 
 type service struct {
@@ -37,17 +39,17 @@ func (s *service) AddTask(description string) Task {
 	return newTask
 }
 
-func (s *service) DeleteTask(id uint) {
+func (s *service) DeleteTask(id uint) error {
 	for i, task := range s.tasks {
 		if task.ID == id {
 			s.tasks = append(s.tasks[:i], s.tasks[i+1:]...)
-			return
+			return nil
 		}
 	}
+	return fmt.Errorf("Tarefa não encontrada")
 }
 
-func (s *service) UpdateTask(id uint, description string, completed bool) Task {
-
+func (s *service) UpdateTask(id uint, description string, completed bool) (Task, error) {
 	for i := range s.tasks {
 		if s.tasks[i].ID == id {
 			s.tasks[i].Description = description
@@ -55,14 +57,14 @@ func (s *service) UpdateTask(id uint, description string, completed bool) Task {
 			return s.GetTask(id)
 		}
 	}
-	return s.GetTask(id)
+	return Task{}, fmt.Errorf("Tarefa não encontrada")
 }
 
-func (s *service) GetTask(id uint) Task {
+func (s *service) GetTask(id uint) (Task, error) {
 	for _, task := range s.tasks {
 		if task.ID == id {
-			return task
+			return task, nil
 		}
 	}
-	return Task{}
+	return Task{}, fmt.Errorf("Tarefa não encontrada")
 }
