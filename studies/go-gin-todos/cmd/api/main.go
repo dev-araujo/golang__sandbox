@@ -1,5 +1,3 @@
-// Ficheiro: cmd/api/main.go
-
 package main
 
 import (
@@ -13,15 +11,16 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Erro ao carregar o ficheiro .env")
+		log.Println("Aviso: Não foi possível encontrar o ficheiro .env")
 	}
 
-	db := storage.InitDB()
-	defer db.Close()
+	store, err := storage.NewPostgresStore()
+	if err != nil {
+		log.Fatal("Não foi possível conectar à base de dados: ", err)
+	}
 
-	router := handlers.SetupRoutes(db)
+	router := handlers.SetupRoutes(store)
 
-	// 3. Arranca o servidor
 	log.Println("Servidor a arrancar na porta 8080...")
 	router.Run(":8080")
 }
