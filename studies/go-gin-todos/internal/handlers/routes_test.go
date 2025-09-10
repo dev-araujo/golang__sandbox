@@ -40,34 +40,23 @@ func TestGetTodos(t *testing.T) {
 
 	router := SetupRoutes(mockStore)
 
-	// 2. Criamos uma requisição HTTP "falsa"
 	req, _ := http.NewRequest(http.MethodGet, "/api/todos", nil)
 
-	// Criamos um "gravador" de resposta
 	w := httptest.NewRecorder()
 
-	// "Anexamos" o userId ao contexto, simulando o que o nosso AuthMiddleware faria
-	req.Header.Set("Content-Type", "application/json") // Embora não seja necessário para GET, é boa prática
+	req.Header.Set("Content-Type", "application/json")
 
-	// Criamos um contexto Gin falso e passamos o userId
 	c, _ := gin.CreateTestContext(w)
 	c.Request = req
-	c.Set("userId", 1) // ID do utilizador de teste
+	c.Set("userId", 1)
 
-	// 3. Executamos a função do handler
-	// Encontramos a função handler para a rota que estamos testando
 	handlerFunc := router.Handler().ServeHTTP
-	handlerFunc(w, req) // Executa a requisição contra o router
+	handlerFunc(w, req)
 
-	// 4. Verificamos os resultados
 	assert.Equal(t, http.StatusOK, w.Code, "O código de status deve ser 200 OK")
 
-	// --- NOVA VERIFICAÇÃO DO CORPO ---
-	// O nosso mock sempre devolve a mesma lista de "todos" falsos
 	expectedBody := `[{"id":"1","title":"Tarefa de Teste 1","completed":false},{"id":"2","title":"Tarefa de Teste 2","completed":true}]`
 
-	// A biblioteca 'assert' tem uma função especial para comparar JSONs,
-	// que ignora problemas de espaçamento e ordem de chaves.
 	assert.JSONEq(t, expectedBody, w.Body.String(), "O corpo da resposta deve ser o JSON esperado")
 
 	t.Log("Corpo da resposta:", w.Body.String())
