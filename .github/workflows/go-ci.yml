@@ -29,6 +29,9 @@ jobs:
         working-directory: ./studies/go-gin-todos
 
       - name: Run Tests
+        env:
+          DB_SOURCE: ${{ secrets.DB_SOURCE }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
         run: go test ./...
         working-directory: ./studies/go-gin-todos
 
