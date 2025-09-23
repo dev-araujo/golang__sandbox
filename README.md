@@ -8,12 +8,18 @@ Este repositório é um sandbox para projetos e estudos em Golang.
 
 ### Projetos de estudo:
 
-- [roller-dice](./projects/roller-dice/): Uma API simples em Go para rolar dados de RPG
-- [go-server-ip](./projects/go-server-ip): Um servidor simples em Go que retorna o endereço de IP do cliente.
+#### Geral
 
-### Estudos de Golang:
+- [roller-dice](./projects/general/roller-dice/): Uma API simples em Go para rolar dados de RPG
+- [go-server-ip](./projects/general/go-server-ip): Um servidor simples em Go que retorna o endereço de IP do cliente.
+- [To-do list](./projects/general/to-do-list): To-do list
+- [web-service-gin](./projects/general/web-service-gin/): Api básica com gin 
 
-- [golang-with-tests](./studies/golang-with-tests): Uma coleção de estudos de Go com foco em testes.
+#### Blockchain
+
+- **Básico**
+    - [Blockchain Básica](./projects/blockchain//basic-blockchain-go/)
+
 
 
 
