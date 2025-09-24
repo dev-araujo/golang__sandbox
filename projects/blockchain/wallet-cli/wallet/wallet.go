@@ -25,7 +25,7 @@ func NewWallet() *Wallet {
 
 }
 
-func (w *Wallet) getAddress() string {
+func (w *Wallet) GetAddress() string {
 	x := w.PublicKey.X.Bytes()
 	y := w.PublicKey.Y.Bytes()
 
