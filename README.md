@@ -19,6 +19,7 @@ Este repositório é um sandbox para projetos e estudos em Golang.
 
 - **Básico**
     - [Blockchain Básica](./projects/blockchain//basic-blockchain-go/)
+    - [Cli Wallet](./projects/blockchain/wallet-cli/)
 
 
 
