@@ -26,9 +26,10 @@ func (b *Block) calculateHash() []byte {
 	return hash[:]
 }
 
-func NewBlock(data []byte, prevBlockHash []byte) *Block {
+func NewBlock(data []byte, prevBlockHash []byte, index uint64) *Block {
 
 	block := &Block{
+		Index:         index,
 		Data:          data,
 		PrevBlockHash: prevBlockHash,
 		Timestamp:     time.Now().Unix(),

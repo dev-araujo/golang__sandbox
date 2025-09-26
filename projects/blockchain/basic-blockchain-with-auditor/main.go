@@ -19,7 +19,6 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		printInline(bc)
 		fmt.Println("enter the data for a new block: ")
 		data, err := reader.ReadString('\n')
 		if err != nil {
@@ -36,6 +35,9 @@ func main() {
 		}
 		if len(trimmedData) > 0 {
 			bc.AddBlock([]byte(trimmedData))
+			if !bc.Auditor() {
+				fmt.Printf("REDE COMPROMETIDA NO BLOCO:\n %v  ", bc.Blocks[len(bc.Blocks)-1])
+			}
 			fmt.Println(NEW_DATA_SEPARATOR)
 			printInline(bc)
 		}

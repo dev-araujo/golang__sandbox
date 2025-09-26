@@ -2,17 +2,26 @@ package blockchain
 
 import "bytes"
 
-func (bc *Blockchain) IsValid() bool {
+func (bc *Blockchain) Auditor() bool {
+	if len(bc.Blocks) == 0 {
+		return true
+	}
+
+	if !bytes.Equal(bc.Blocks[0].Hash, bc.Blocks[0].calculateHash()) {
+		return false
+	}
 
 	for i := 1; i < len(bc.Blocks); i++ {
-		firstHashValidation := bytes.Equal(bc.Blocks[i].PrevBlockHash, bc.Blocks[i-1].Hash)
-		secondHashValidation := bytes.Equal(bc.Blocks[i].Hash, bc.Blocks[i].calculateHash())
+		currentBlock := bc.Blocks[i]
+		previousBlock := bc.Blocks[i-1]
 
-		if !firstHashValidation || !secondHashValidation {
+		if !bytes.Equal(currentBlock.PrevBlockHash, previousBlock.Hash) {
 			return false
 		}
 
+		if !bytes.Equal(currentBlock.Hash, currentBlock.calculateHash()) {
+			return false
+		}
 	}
 	return true
-
 }
