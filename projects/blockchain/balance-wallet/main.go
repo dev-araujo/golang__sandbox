@@ -9,6 +9,7 @@ import (
 func main() {
 	router := gin.Default()
 	router.GET("/ping", h.GetStatus)
+	router.GET("/balance/:network/:address", h.GetBalance)
 
 	router.Run(":8080")
 }
