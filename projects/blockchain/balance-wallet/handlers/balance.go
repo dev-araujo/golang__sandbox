@@ -13,7 +13,7 @@ import (
 
 const RPC_URL_TESTNET = "https://ethereum-sepolia-rpc.publicnode.com"
 const RPC_MAINNET = "https://ethereum-rpc.publicnode.com"
-const WEI_ETHER = 1000000000000000000 // 10^18
+const WEI_ETHER = 1e18 // 10^18
 
 func GetStatus(c *gin.Context) {
 	c.JSON(200, gin.H{
@@ -53,7 +53,7 @@ func GetBalance(c *gin.Context) {
 	balance, err := connection.BalanceAt(context.Background(), common.HexToAddress(address), nil)
 	diviser := big.NewInt(WEI_ETHER)
 
-	balanceConversion := big.NewInt(1e18) // 10^18
+	balanceConversion := big.NewInt(WEI_ETHER) // 10^18
 	balanceConversion = balanceConversion.Div(balance, diviser)
 
 	if err != nil {
