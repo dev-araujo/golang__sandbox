@@ -23,7 +23,9 @@ Este repositório é um sandbox para projetos e estudos em Golang.
     - [Blockchain Básica com Validador de Bloco](./projects/blockchain/basic-blockchain-with-auditor/)
     - [Api de consulta de Saldo(Ethereum)](./projects/blockchain/balance-wallet/)
 
-
+- **Intermediário**
+    - [Blokchain com simulação de proof of work básica](./projects/blockchain/proof-of-work/)
+    -
 
 
 
