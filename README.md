@@ -2,9 +2,7 @@
 
 Este repositório é um sandbox para projetos e estudos em Golang. 
 
-## Organização da Sandbox 
 
-> Dos mais atuais aos mais antigos
 
 ### Projetos de estudo:
 
