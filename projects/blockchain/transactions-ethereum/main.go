@@ -1,16 +1,23 @@
+// No arquivo: main.go
+
 package main
 
 import (
 	"github.com/dev-araujo/golang__sandbox/projects/blockchain/transactions-ethereum/config"
-	h "github.com/dev-araujo/golang__sandbox/projects/blockchain/transactions-ethereum/handlers"
+	"github.com/dev-araujo/golang__sandbox/projects/blockchain/transactions-ethereum/handlers"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	env := config.LoadConfig()
+	privateKey := config.LoadConfig()
+
+	h := handlers.NewHandler(privateKey)
 
 	router := gin.Default()
-	router.GET("/ping", h.GetStatus)
+
+	router.GET("/ping", handlers.GetStatus)
+
+	router.POST("/send", h.SendTransactionHandler)
 
 	router.Run(":8080")
 }
